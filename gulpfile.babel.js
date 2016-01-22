@@ -1,22 +1,31 @@
 'use strict';
 
 import gulp from 'gulp';
-import ts from 'gulp-typescript';
+import ts from 'gulp-tsc';
 import cc from 'gulp-closure-compiler';
+import pn from 'gulp-plumber-notifier';
+import concat from 'gulp-concat';
+import amd from 'gulp-amd-optimizer';
 
 gulp.task('ts', () => {
 	return gulp.src('src/**/*.ts')
+	.pipe(pn())
 	.pipe(ts({
-		noImplicitAny: true,
-		out: 'main.js'
+		target: 'ES5',
+		tmpDir: '.tmp/'
 	}))
-	.pipe(gulp.dest('.tmp/'));
+	.pipe(amd({
+		baseUrl: ''
+	}))
+	.pipe(concat('entry.js'))
+	.pipe(gulp.dest('dist/'));
 });
 
-gulp.task('build:js', ['ts'], () => {
-	return gulp.src('.tmp/*.js')
+gulp.task('build', ['ts'], () => {
+	return gulp.src('dist/*.js')
+	.pipe(pn())
 	.pipe(cc({
-		fileName: 'main.js',
+		fileName: 'entry.js',
 		continueWithWarnings: true,
 		compilerFlags: {
 			compilation_level: 'ADVANCED_OPTIMIZATIONS',
@@ -25,8 +34,8 @@ gulp.task('build:js', ['ts'], () => {
 			warning_level: 'QUIET'
 		}
 	}))
-	.pipe(gulp.dest('dist/'));
-})
+	.pipe(gulp.dest('bin/'));
+});
 
 gulp.task('default', ['ts'], () => {
 	gulp.watch('src/**/*.ts', ['ts']);

@@ -1,9 +1,13 @@
 {
-	"dependencies": {
-		"babel-core": "^6.4.5",
-		"babel-preset-es2015": "^6.3.13",
-		"gulp": "^3.9.0",
-		"gulp-closure-compiler": "^0.4.0",
-		"gulp-typescript": "^2.10.0"
-	}
+  "dependencies": {
+    "babel-core": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "gulp": "^3.9.0",
+    "gulp-amd-optimizer": "^0.4.0",
+    "gulp-closure-compiler": "^0.4.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-plumber-notifier": "0.0.3",
+    "gulp-tsc": "^1.1.4",
+    "gulp-typescript": "^2.10.0"
+  }
 }
