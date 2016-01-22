@@ -2,5 +2,5 @@ node_modules/
 dist/
 bin/
 .tmp/
-
+.idea/
 /index.html
