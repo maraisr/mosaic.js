@@ -1,4 +1,4 @@
-module Vector {
+namespace Vector {
 	export class Three {
 		xyz: Array<number>;
 
@@ -118,6 +118,26 @@ module Vector {
 
 		dot(b: Three): number {
 			return this.x * b.x + this.y * b.y + this.z * b.z;
+		}
+
+		min(b: Three): Three {
+			var r: Three = new Three();
+
+			r.x = (this.x < b.x) ? this.x : b.x;
+			r.y = (this.y < b.y) ? this.y : b.y;
+			r.z = (this.z < b.z) ? this.z : b.z;
+
+			return r;
+		}
+
+		max(b: Three): Three {
+			var r: Three = new Three();
+
+			r.x = (this.x > b.x) ? this.x : b.x;
+			r.y = (this.y > b.y) ? this.y : b.y;
+			r.z = (this.z > b.z) ? this.z : b.z;
+
+			return r;
 		}
 	}
 }

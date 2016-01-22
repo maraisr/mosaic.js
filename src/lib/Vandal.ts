@@ -1,6 +1,6 @@
 /// <reference path="Vector.ts"/>
 
-module Vandal {
+namespace Vandal {
 	export class Mosaic {
 		private el: HTMLElement;
 		private diffuse: Colour;
@@ -16,14 +16,14 @@ module Vandal {
 	}
 
 	class Colour {
-		private rgb: Array<number>;
+		private rgb: Vector.Three;
 
 		constructor(rgb: Array<number>) {
-			this.rgb = rgb;
+			this.rgb = new Vector.Three(rgb);
 		}
 
 		toString() {
-			return 'rgb('+this.rgb.join(',')+');';
+			return 'rgb(' + this.rgb.toString() + ');';
 		}
 	}
 }
