@@ -7,15 +7,15 @@ module Vector {
 		}
 
 		set x(v: number) {
-			this.xyz[0]=v;
+			this.xyz[0] = v;
 		}
 
 		set y(v: number) {
-			this.xyz[1]=v;
+			this.xyz[1] = v;
 		}
 
 		set z(v: number) {
-			this.xyz[2]=v;
+			this.xyz[2] = v;
 		}
 
 		get x(): number {
@@ -102,6 +102,22 @@ module Vector {
 
 		normalize(): Three {
 			return this.divideScalar(this.length());
+		}
+
+		distanceSquared(b: Three): number {
+			var dx: number = this.x - b.x;
+			var dy: number = this.y - b.y;
+			var dz: number = this.z - b.z;
+
+			return dx * dx + dy * dy + dz * dz;
+		}
+
+		distance(b: Three): number {
+			return Math.sqrt(this.distanceSquared(b));
+		}
+
+		dot(b: Three): number {
+			return this.x * b.x + this.y * b.y + this.z * b.z;
 		}
 	}
 }
