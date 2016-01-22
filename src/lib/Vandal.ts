@@ -1,5 +1,7 @@
-declare module "Vandal" {
-    interface Mosaic {
-        
-    }
+namespace Vandal {
+	export class Mesh {
+		constructor() {
+			console.log('This is the mesh');
+		}
+	}
 }
