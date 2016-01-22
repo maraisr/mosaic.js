@@ -1,4 +1,5 @@
 /// <reference path="Vector.ts"/>
+/// <reference path="Delaunay.ts"/>
 
 namespace Vandal {
 	export class Mosaic {
@@ -12,6 +13,8 @@ namespace Vandal {
 			this.count = count;
 			this.diffuse = new Colour(diffuse);
 			this.ambient = new Colour(ambient);
+
+			new Delaunay();
 		}
 	}
 
