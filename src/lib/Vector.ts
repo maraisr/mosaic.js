@@ -1,49 +1,49 @@
 namespace Vector {
 	export class Three {
-		xyz: Array<number>;
+        xyz:Array<number>;
 
-		constructor(xyz: Array<number> = [0,0,0]) {
+        constructor(xyz:Array<number> = [0, 0, 0]) {
 			this.xyz = xyz;
 		}
 
-		set x(v: number) {
+        set x(v:number) {
 			this.xyz[0] = v;
 		}
 
-		set y(v: number) {
+        set y(v:number) {
 			this.xyz[1] = v;
 		}
 
-		set z(v: number) {
+        set z(v:number) {
 			this.xyz[2] = v;
 		}
 
-		get x(): number {
+        get x():number {
 			return this.xyz[0];
 		}
 
-		get y(): number {
+        get y():number {
 			return this.xyz[1];
 		}
 
-		get z(): number {
+        get z():number {
 			return this.xyz[2];
 		}
 
-		toString(): string {
+        toString():string {
 			return this.xyz.join(', ');
 		}
 
-		add(b: Three): Three {
+        add(b:Three):Three {
 			return new Three([this.x + b.x, this.y + b.y, this.z + b.z]);
 		}
 
-		subtract(b: Three): Three {
+        subtract(b:Three):Three {
 			return new Three([b.x - this.x, b.y - this.y, b.z - this.z]);
 		}
 
-		divideScalar(s: number): Three {
-			var r: Three = new Three();
+        divideScalar(s:number):Three {
+            var r:Three = new Three();
 
 			r.x = ((this.x == 0) ? 0 : (this.x / s));
 			r.y = ((this.y == 0) ? 0 : (this.y / s));
@@ -52,8 +52,8 @@ namespace Vector {
 			return r;
 		}
 
-		multiplyScalar(s: number): Three {
-			var r: Three = new Three();
+        multiplyScalar(s:number):Three {
+            var r:Three = new Three();
 
 			r.x = ((this.x == 0) ? 0 : (this.x * s));
 			r.y = ((this.y == 0) ? 0 : (this.y * s));
@@ -62,8 +62,8 @@ namespace Vector {
 			return r;
 		}
 
-		multiplyVectors(b: Three): Three {
-			var r: Three = new Three();
+        multiplyVectors(b:Three):Three {
+            var r:Three = new Three();
 
 			r.x = this.x * b.x;
 			r.y = this.y * b.y;
@@ -72,8 +72,8 @@ namespace Vector {
 			return r;
 		}
 
-		divideVectors(b: Three): Three {
-			var r: Three = new Three();
+        divideVectors(b:Three):Three {
+            var r:Three = new Three();
 
 			r.x = this.x / b.x;
 			r.y = this.y / b.y;
@@ -82,8 +82,8 @@ namespace Vector {
 			return r;
 		}
 
-		cross(b: Three): Three {
-			var r: Three = new Three();
+        cross(b:Three):Three {
+            var r:Three = new Three();
 
 			r.x = this.y * b.z - this.z * b.y;
 			r.y = this.z * b.x - this.x * b.z;
@@ -92,36 +92,36 @@ namespace Vector {
 			return r;
 		}
 
-		lengthSquared(): number {
+        lengthSquared():number {
 			return this.x * this.x + this.y * this.y + this.z * this.z;
 		}
 
-		length(): number {
+        length():number {
 			return Math.sqrt(this.lengthSquared());
 		}
 
-		normalize(): Three {
+        normalize():Three {
 			return this.divideScalar(this.length());
 		}
 
-		distanceSquared(b: Three): number {
-			var dx: number = this.x - b.x;
-			var dy: number = this.y - b.y;
-			var dz: number = this.z - b.z;
+        distanceSquared(b:Three):number {
+            var dx:number = this.x - b.x;
+            var dy:number = this.y - b.y;
+            var dz:number = this.z - b.z;
 
 			return dx * dx + dy * dy + dz * dz;
 		}
 
-		distance(b: Three): number {
+        distance(b:Three):number {
 			return Math.sqrt(this.distanceSquared(b));
 		}
 
-		dot(b: Three): number {
+        dot(b:Three):number {
 			return this.x * b.x + this.y * b.y + this.z * b.z;
 		}
 
-		min(b: Three): Three {
-			var r: Three = new Three();
+        min(b:Three):Three {
+            var r:Three = new Three();
 
 			r.x = (this.x < b.x) ? this.x : b.x;
 			r.y = (this.y < b.y) ? this.y : b.y;
@@ -130,8 +130,8 @@ namespace Vector {
 			return r;
 		}
 
-		max(b: Three): Three {
-			var r: Three = new Three();
+        max(b:Three):Three {
+            var r:Three = new Three();
 
 			r.x = (this.x > b.x) ? this.x : b.x;
 			r.y = (this.y > b.y) ? this.y : b.y;

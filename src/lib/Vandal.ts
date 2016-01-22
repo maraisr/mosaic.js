@@ -3,25 +3,23 @@
 
 namespace Vandal {
 	export class Mosaic {
-		private el: HTMLElement;
-		private diffuse: Colour;
-		private ambient: Colour;
-		private count: number;
+        private el:HTMLElement;
+        private diffuse:Colour;
+        private ambient:Colour;
+        private count:number;
 
-		constructor(el: HTMLElement, diffuse: Array<number>, ambient: Array<number>, count: number) {
+        constructor(el:HTMLElement, diffuse:Array<number>, ambient:Array<number>, count:number) {
 			this.el = el;
 			this.count = count;
 			this.diffuse = new Colour(diffuse);
 			this.ambient = new Colour(ambient);
-
-			new Delaunay();
 		}
 	}
 
 	class Colour {
-		private rgb: Vector.Three;
+        private rgb:Vector.Three;
 
-		constructor(rgb: Array<number>) {
+        constructor(rgb:Array<number>) {
 			this.rgb = new Vector.Three(rgb);
 		}
 
