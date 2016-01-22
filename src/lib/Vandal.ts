@@ -1,5 +1,5 @@
 /// <reference path="Vector.ts"/>
-/// <reference path="Delaunay.ts"/>
+/// <reference path="Generator.ts"/>
 
 namespace Vandal {
 	export class Mosaic {
