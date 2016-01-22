@@ -17,7 +17,7 @@ gulp.task('ts', () => {
 });
 
 gulp.task('js', ['ts'], () => {
-	return gulp.src('.tmp/**/*.js')
+	return gulp.src('.tmp/entry.js')
 	.pipe(gulp.dest('dist/'))
 });
 
