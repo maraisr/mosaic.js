@@ -141,6 +141,7 @@ namespace Vandal {
 		el:Element;
 
 		private centroid:Vector.Three;
+		private normal:Vector.Three;
 
 		constructor(v:Array<Vector.Three>, colour:Colour) {
 			super();
@@ -150,25 +151,37 @@ namespace Vandal {
 			this.el = this.render();
 
 			this.centroid = this.calcCentroid();
+			this.normal = this.calcNormal();
 		}
 
 		calcCentroid():Vector.Three {
 
-			var r:Vector.Three = new Vector.Three([this.points.map((v:Vector.Three) => {
-				return v.x;
-			}).reduce((a:number, b:number) => {
-				return a + b;
-			}), this.points.map((v:Vector.Three) => {
-				return v.y;
-			}).reduce((a:number, b:number) => {
-				return a + b;
-			}), this.points.map((v:Vector.Three) => {
-				return v.z;
-			}).reduce((a:number, b:number) => {
-				return a + b;
-			})]);
+			var r:Vector.Three = new Vector.Three([
+				// Sum of all x's
+				this.points.map((v:Vector.Three) => {
+					return v.x;
+				}).reduce((a:number, b:number) => {
+					return a + b;
+				}),
+				// Sum of all y's
+				this.points.map((v:Vector.Three) => {
+					return v.y;
+				}).reduce((a:number, b:number) => {
+					return a + b;
+				}),
+				// Sum of all z's
+				this.points.map((v:Vector.Three) => {
+					return v.z;
+				}).reduce((a:number, b:number) => {
+					return a + b;
+				})
+			]);
 
 			return r.divideScalar(3);
+		}
+
+		calcNormal():Vector.Three {
+			return this.b.subtract(this.a).cross(this.c.subtract(this.a)).normalize();
 		}
 
 		get a():Vector.Three {
