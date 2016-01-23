@@ -140,14 +140,35 @@ namespace Vandal {
 	class Triangle extends Polygon {
 		el:Element;
 
+		private centroid:Vector.Three;
+
 		constructor(v:Array<Vector.Three>, colour:Colour) {
 			super();
 
 			this.points = v;
-
 			this.colour = colour;
-
 			this.el = this.render();
+
+			this.centroid = this.calcCentroid();
+		}
+
+		calcCentroid():Vector.Three {
+
+			var r:Vector.Three = new Vector.Three([this.points.map((v:Vector.Three) => {
+				return v.x;
+			}).reduce((a:number, b:number) => {
+				return a + b;
+			}), this.points.map((v:Vector.Three) => {
+				return v.y;
+			}).reduce((a:number, b:number) => {
+				return a + b;
+			}), this.points.map((v:Vector.Three) => {
+				return v.z;
+			}).reduce((a:number, b:number) => {
+				return a + b;
+			})]);
+
+			return r.divideScalar(3);
 		}
 
 		get a():Vector.Three {
