@@ -39,7 +39,7 @@ namespace Vector {
 		}
 
         subtract(b:Three):Three {
-			return new Three([b.x - this.x, b.y - this.y, b.z - this.z]);
+			return new Three([this.x - b.x, this.y - b.y, this.z - b.z]);
 		}
 
         divideScalar(s:number):Three {

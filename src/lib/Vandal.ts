@@ -29,30 +29,81 @@ namespace Vandal {
 	}
 
 	class Colour {
-		private rgb:Vector.Three;
+		rgb:Vector.Three;
 
 		constructor(rgb:Array<number>) {
 			this.rgb = new Vector.Three(rgb);
 		}
 
+		blend(d:Colour, a:Colour, lum:number):Colour {
+			var r:Vector.Three = new Vector.Three(this.rgb.xyz);
+
+			return new Colour(r.add(d.rgb.multiplyVectors(a.rgb).multiplyScalar(lum)).xyz.map((v:number) => {
+				return Math.ceil(v);
+			}));
+		}
+
+		shade(percent:number):Colour {
+			var f = this.rgb.xyz, t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f[0], G = f[1], B = f[2];
+			return new Colour([(Math.round((t - R) * p) + R), (Math.round((t - G) * p) + G), (Math.round((t - B) * p) + B)]);
+		}
+
 		toString() {
-			return 'rgb(' + this.rgb.toString() + ');';
+			return 'rgb(' + this.rgb.toString() + ')';
 		}
 	}
 
-	class Mesh {
-		private width:number;
-		private height:number;
-		private slices:number;
-		private ambient:Colour;
-		private diffuse:Colour;
+	class Light {
+		private ray:Vector.Three;
+
+		ambient:Colour;
+		diffuse:Colour;
+
+		width:number;
+		height:number;
 
 		polygons:Array<Triangle>;
+
+		constructor() {
+			this.ray = new Vector.Three([(this.width / 2), (this.height / 2), 1]);
+
+			this.run();
+		}
+
+		private run() {
+			for (var i:number = 0; i < this.polygons.length; i++) {
+				var item:Triangle = this.polygons[i],
+					ill:number = ((n:number) => {
+						switch (item.face) {
+							case 1:
+								return Math.abs(Math.min(n, 0));
+								break;
+							case 2:
+								return Math.max(Math.abs(n), 0);
+								break;
+							default:
+								return Math.abs(n);
+								break;
+						}
+					})(item.normal.dot(this.ray.subtract(item.centroid).normalize()));
+
+				var c:Colour = item.colour.blend(this.ambient, this.diffuse, ill);
+
+				item.el.setAttributeNS(null, 'style', 'fill: ' + c.toString() + '; stroke: ' + c.toString() + ';');
+			}
+		}
+	}
+
+	class Mesh extends Light {
+		private slices:number;
 
 		constructor(width:number, height:number, slices:number, ambient:Colour, diffuse:Colour) {
 			this.width = width;
 			this.height = height;
 			this.slices = slices;
+
+			this.ambient = ambient;
+			this.diffuse = diffuse;
 
 			var i:number, x:number, y:number, vertices:Array<Array<number>>,
 				offsetX:number = 0,
@@ -90,6 +141,8 @@ namespace Vandal {
 
 				return new Triangle(a, ambient);
 			});
+
+			super();
 		}
 	}
 
@@ -140,14 +193,30 @@ namespace Vandal {
 	class Triangle extends Polygon {
 		el:Element;
 
-		private centroid:Vector.Three;
-		private normal:Vector.Three;
+		centroid:Vector.Three;
+		normal:Vector.Three;
+
+		face:number;
 
 		constructor(v:Array<Vector.Three>, colour:Colour) {
 			super();
 
 			this.points = v;
 			this.colour = colour;
+			this.face = ((n:number) => {
+				if (n > 50) {
+					return 0;
+				}
+
+				if (n < 50 && n > 25) {
+					return 1;
+				}
+
+				if (n < 25) {
+					return 2;
+				}
+			})(Math.random() * 100);
+
 			this.el = this.render();
 
 			this.centroid = this.calcCentroid();
@@ -181,7 +250,7 @@ namespace Vandal {
 		}
 
 		calcNormal():Vector.Three {
-			return this.b.subtract(this.a).cross(this.c.subtract(this.a)).normalize();
+			return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize();
 		}
 
 		get a():Vector.Three {
