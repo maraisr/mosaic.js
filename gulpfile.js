@@ -42,13 +42,14 @@ gulp.task('build:es6', ['ts'], function () {
 gulp.task('build', ['build:es6'], function () {
 	return gulp.src('.tmp/two/Vandal.js')
 		.pipe(gc({
-			fileName: 'final.js',
+			fileName: 'Mosaic.js',
 			compilerFlags: {
 				compilation_level: 'ADVANCED_OPTIMIZATIONS',
 				language_in: 'ES6_TYPED',
 				language_out: 'ECMASCRIPT5_STRICT',
 				warning_level: 'QUIET',
-				use_types_for_optimization: true
+				use_types_for_optimization: true,
+				generate_exports: true
 			}
 		}))
 		.pipe(gulp.dest('bin/'))
