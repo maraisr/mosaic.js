@@ -139,5 +139,19 @@ namespace Vector {
 
 			return r;
 		}
+
+        is(b:Three):boolean {
+            return (this.x == b.x && this.y == b.y && this.z == b.z);
+        }
+
+        copy():Three {
+            var r:Three = new Three();
+
+            r.x = this.x;
+            r.y = this.y;
+            r.z = this.z;
+
+            return r;
+        }
 	}
 }
