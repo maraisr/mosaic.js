@@ -1,15 +1,13 @@
-/// <reference path="Vector.ts"/>
-/// <reference path="Generator.ts"/>
-
-interface Array<T> {
-	chunk(n:number):Array<Array<number>>
-}
+///<reference path="lib/Common.ts"/>
 
 Array.prototype.chunk = function (n:number):Array<any> {
 	return Array.apply(null, Array(Math.ceil(this.length / n))).map((x:number, i:number) => i).map((x:number, i:number) => this.slice(i * n, i * n + n));
 }
 
-namespace Vandal {
+import {Generators} from 'lib/Generators';
+import {Vector} from 'lib/Vector';
+
+module Vandal {
 	export class Mosaic {
 		private el:HTMLElement;
 		private count:number;
@@ -38,7 +36,7 @@ namespace Vandal {
 					this.mesh.blendLights();
 				}
 
-				if (screenWH != this.el.offsetWidth + this.el.offsetHeight) {
+				if (screenWH == 0 || screenWH != this.el.offsetWidth + this.el.offsetHeight) {
 					screenWH = this.el.offsetWidth + this.el.offsetHeight;
 
 					run();
@@ -166,7 +164,7 @@ namespace Vandal {
 				vertices.push([offsetX + Math.random() * width, offsetY - height]);
 			}
 
-			this.polygons = (new Generator.Delaunay()).triangulate(vertices).chunk(3).map((v:Array<number>) => {
+			this.polygons = (new Generators.Delaunay(vertices)).triangles.chunk(3).map((v:Array<number>) => {
 				var a:Array<Vector.Three> = new Array(v.length);
 
 				a = v.map((i:number) => {
@@ -313,3 +311,5 @@ namespace Vandal {
 		}
 	}
 }
+
+new Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);
