@@ -1,4 +1,4 @@
-Moasic JS
+Mosaic JS
 =========
 [![Bower version](https://badge.fury.io/bo/mosaic.js.svg)](https://github.com/maraisr/mosaic.js)
 
