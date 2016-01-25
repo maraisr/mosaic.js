@@ -228,7 +228,7 @@ module Vandal {
 				'points': this.points.map((v:Vector.Three) => {
 					return v.x + ' ' + v.y;
 				}).join(' '),
-				'style': 'fill: ' + this.colour.toString() + '; stroke: ' + this.colour.toString() + ';'
+				'style': 'fill:' + this.colour.toString() + '; stroke:' + this.colour.toString() + ';'
 			});
 
 			return t;
