@@ -16,12 +16,7 @@ gulp.task('clean', function () {
 gulp.task('ts', ['clean'], function () {
 	return gulp.src(['src/**/*.ts'])
 		.pipe(pn())
-		.pipe(ts({
-			removeComments: false,
-			noImplicitAny: true,
-			target: 'ES6',
-			sortOutput: true
-		}))
+		.pipe(ts(ts.createProject('tsconfig.json')))
 		.pipe(gulp.dest('.tmp/one/'));
 });
 
@@ -39,7 +34,7 @@ gulp.task('build:es6', ['ts'], function () {
 		.pipe(gulp.dest('.tmp/two/'))
 })
 
-gulp.task('build', ['build:es6'], function () {
+gulp.task('default', ['build:es6'], function () {
 	return gulp.src('.tmp/two/Vandal.js')
 		.pipe(gc({
 			fileName: 'Mosaic.js',
@@ -53,8 +48,4 @@ gulp.task('build', ['build:es6'], function () {
 			}
 		}))
 		.pipe(gulp.dest('bin/'))
-})
-
-gulp.task('default', ['ts'], function () {
-	gulp.watch('src/**/*.ts', ['ts']);
 });

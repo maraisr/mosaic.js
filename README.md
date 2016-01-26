@@ -12,11 +12,12 @@ Delaunay triangulation shaded, from a light source based on mouse cursor. [SEE M
 
 ### Development
 ```
-npm i
-gulp
+npm i tsc -g
+tsc
 ```
 
 ### Build
 ```
-gulp build
+npm i
+gulp
 ```

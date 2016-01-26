@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"removeComments": true,
+		"outDir": ".tmp/one/",
+		"sourceMap": false,
+		"target": "ES6"
+	},
+	"files": [
+		"src/Vandal.ts"
+	]
+}
