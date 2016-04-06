@@ -1,10 +1,13 @@
 {
 	"compilerOptions": {
-		"noImplicitAny": true,
-		"removeComments": true,
-		"outDir": ".tmp/one/",
+		"module": "es2015",
+		"target": "es2015",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"noImplicitAny": false,
+		"removeComments": false,
 		"sourceMap": false,
-		"target": "ES6"
+		"outDir": "tmp/"
 	},
 	"files": [
 		"src/Vandal.ts"

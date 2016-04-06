@@ -1,28 +1,42 @@
 Mosaic JS
 =========
-[![Bower version](https://badge.fury.io/bo/mosaic.js.svg)](https://github.com/maraisr/mosaic.js)
 
-Real time Delaunay triangulation! Shaded, shaped and plotted! [Live Demo](http://marais.io). Written in TypeScript, for the strict sexiness it offers. Uses [Google Closure Compiler](https://developers.google.com/closure/compiler/) compilation passed through [Rollup.js](http://rollupjs.org/) for the tree shaking love they offer. Sadly at the moment there is no API because GCC is being annoying with its "Advanced Optimization's".
+[![NPM version](https://img.shields.io/npm/v/mosaic.js.svg?style=flat-square)](https://www.npmjs.com/package/mosaic.js)
+[![Bower version](https://img.shields.io/bower/v/mosaic.js.svg?style=flat-square)](https://github.com/maraisr/mosaic.js)
+[![License](https://img.shields.io/npm/l/mosaic.js.svg?style=flat-square)](https://github.com/maraisr/mosaic.js/blob/master/LICENSE.md)
+
+Real time Delaunay triangulation! Shaded, shaped and plotted! [Live Demo](http://marais.io). Written in TypeScript, for the strict sexiness it offers. Uses [Google Closure Compiler](https://developers.google.com/closure/compiler/) compilation passed through [Rollup.js](http://rollupjs.org/) for the tree shaking love they offer.
 
 ## Installation
-```
+Install via Bower
+```sh
 bower i mosaic.js
 ```
 
-### Usage
-```
-<div id="vandal"></div>
-<script src="Mosaic.js"></script>
+Install via NPM
+```sh
+npmi i mosaic.js
 ```
 
-### Development
-```
-npm i tsc -g
-tsc
+### Usage
+```js
+/**
+ * Mosaic is global. 
+ * 
+ * @param {HTMLElement} arg1 The element to which you which to render.
+ * @param {Array<number>} arg2 The diffuse rgb Array
+ * @param {Array<number>} arg3 The ambient rgb Array
+ * @param {number} arg4 Number of triangles
+ */
+new Mosaic.Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);
 ```
 
 ### Build
-```
-npm i
-gulp
-```
+- `npm i tsc -g`
+- `npm i`
+- `npm run build`
+
+## License
+[MIT](https://github.com/maraisr/mosaic.js/blob/master/LICENSE.md)
+
+Copyright(c) 2016 Marais Rossouw

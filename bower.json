@@ -1,25 +1,27 @@
 {
-  "name": "mosaic.js",
-  "description": "Delaunay triangulation shaded, from a light source based on mouse cursor.",
-  "main": "bin/Mosaic.js",
-  "authors": [
-    "Marais Rossouw"
-  ],
-  "license": "GNU",
-  "keywords": [
-    "mosaic",
-    "delaunay",
-    "triangulation",
-    "light",
-    "shader"
-  ],
-  "homepage": "https://github.com/maraisr/mosaic.js",
-  "moduleType": [
-    "amd"
-  ],
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components"
-  ]
+	"name": "mosaic.js",
+	"description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
+	"main": "bin/mosaic.js",
+	"authors": [
+		"Marais Rossouw"
+	],
+	"license": "GNU",
+	"keywords": [
+		"mosaic",
+		"delaunay",
+		"triangulation",
+		"light",
+		"shader"
+	],
+	"homepage": "https://github.com/maraisr/mosaic.js",
+	"moduleType": [
+		"amd",
+		"node"
+	],
+	"ignore": [
+		"**/.*",
+		"tmp",
+		"node_modules",
+		"bower_components"
+	]
 }

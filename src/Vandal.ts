@@ -4,10 +4,10 @@ Array.prototype.chunk = function (n:number):Array<any> {
 	return Array.apply(null, Array(Math.ceil(this.length / n))).map((x:number, i:number) => i).map((x:number, i:number) => this.slice(i * n, i * n + n));
 }
 
-import {Generators} from 'lib/Generators';
-import {Vector} from 'lib/Vector';
+import {Generators} from './lib/Generators';
+import {Vector} from './lib/Vector';
 
-module Vandal {
+export module Vandal {
 	export class Mosaic {
 		private el:HTMLElement;
 		private count:number;
@@ -108,13 +108,10 @@ module Vandal {
 						switch (item.face) {
 							case 1:
 								return Math.abs(Math.min(n, 0)) * 0.99;
-								break;
 							case 2:
 								return Math.max(Math.abs(n), 0) * 0.89;
-								break;
 							default:
 								return Math.abs(n) * 0.85;
-								break;
 						}
 					})(item.normal.dot(this.ray.subtract(item.centroid).normalize()));
 
@@ -131,6 +128,8 @@ module Vandal {
 		private mouseXY:number;
 
 		constructor(width:number, height:number, slices:number, ambient:Colour, diffuse:Colour) {
+			super();
+
 			this.width = width;
 			this.height = height;
 			this.slices = slices;
@@ -174,8 +173,6 @@ module Vandal {
 
 				return new Triangle(a, ambient);
 			});
-
-			super();
 		}
 
 		blendNow():boolean {
@@ -312,4 +309,4 @@ module Vandal {
 	}
 }
 
-new Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);
+//new Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);
