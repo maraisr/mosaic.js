@@ -8,14 +8,15 @@ Mosaic JS
 Real time Delaunay triangulation! Shaded, shaped and plotted! [Live Demo](http://marais.io). Written in TypeScript, for the strict sexiness it offers. Uses [Google Closure Compiler](https://developers.google.com/closure/compiler/) compilation passed through [Rollup.js](http://rollupjs.org/) for the tree shaking love they offer.
 
 ## Installation
-Install via Bower
+
+via [npm](https://www.npmjs.com/)
 ```sh
-bower i mosaic.js
+npm i mosaic.js
 ```
 
-Install via NPM
+via [bower](http://bower.io//)
 ```sh
-npmi i mosaic.js
+bower i mosaic.js
 ```
 
 ### Usage
