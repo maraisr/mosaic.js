@@ -1,7 +1,7 @@
 {
 	"name": "mosaic.js",
 	"description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
-	"main": "bin/mosaic.js",
+	"main": "dist/mosaic.js",
 	"authors": [
 		"Marais Rossouw"
 	],
