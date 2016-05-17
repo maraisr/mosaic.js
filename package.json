@@ -1,37 +1,37 @@
 {
-	"name": "mosaic-js",
-	"version": "0.1.3",
-	"description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
-	"author": "Marais Rossouw",
-	"license": "MIT",
-	"main": "dist/mosaic.js",
-	"scripts": {
-		"clean": "rm -rf dist/* tmp/*",
-		"prebuild": "npm run clean",
-		"build": "tsc && rollup -c rollup.conf.js",
-		"postbuild": "uglifyjs dist/mosaic.js -c -m -o dist/mosaic.min.js"
-	},
-	"homepage": "https://github.com/maraisr/mosaic.js#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/maraisr/mosaic.js.git"
-	},
-	"bugs": {
-		"url": "https://github.com/maraisr/mosaic.js/issues"
-	},
-	"keywords": [
-		"mosaic",
-		"delaunay",
-		"triangulation",
-		"light",
-		"shader"
-	],
-	"devDependencies": {
-		"babel-preset-es2015-rollup": "^1.1.1",
-		"babel-preset-stage-2": "^6.5.0",
-		"rollup": "^0.25.8",
-		"rollup-plugin-babel": "^2.4.0",
-		"rollup-plugin-includepaths": "^0.1.2",
-		"uglifyjs": "^2.4.10"
-	}
+  "name": "mosaic-js",
+  "version": "0.1.4",
+  "description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
+  "author": "Marais Rossouw",
+  "license": "MIT",
+  "main": "dist/mosaic.js",
+  "scripts": {
+    "clean": "rm -rf dist/* tmp/*",
+    "prebuild": "npm run clean",
+    "build": "tsc && rollup -c rollup.conf.js",
+    "postbuild": "uglifyjs dist/mosaic.js -c -m -o dist/mosaic.min.js"
+  },
+  "homepage": "https://github.com/maraisr/mosaic.js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maraisr/mosaic.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maraisr/mosaic.js/issues"
+  },
+  "keywords": [
+    "mosaic",
+    "delaunay",
+    "triangulation",
+    "light",
+    "shader"
+  ],
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-preset-stage-2": "^6.5.0",
+    "rollup": "^0.25.8",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-includepaths": "^0.1.2",
+    "uglifyjs": "^2.4.10"
+  }
 }
