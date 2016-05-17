@@ -1,6 +1,6 @@
 {
   "name": "mosaic-js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
   "author": "Marais Rossouw",
   "license": "MIT",
