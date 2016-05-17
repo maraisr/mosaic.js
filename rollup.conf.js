@@ -12,7 +12,6 @@ module.exports = {
 		babel()
 	],
 	format: 'umd',
-	moduleName: 'Mosaic',
-	moduleId: 'mosaic',
+	moduleName: 'mosaic-js',
 	sourceMap: false
 };
