@@ -45,7 +45,7 @@ export default class Mosaic {
 			requestAnimationFrame(render);
 		}
 
-		requestAnimationFrame(render);
+		render();
 	}
 
 	clear(): void {

@@ -1,1 +1,720 @@
-!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):t.mosaic=e()}(this,function(){"use strict";var t={};t.classCallCheck=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")},t.createClass=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),t.inherits=function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)},t.possibleConstructorReturn=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e};var e;!function(e){var n=1/1048576,r=function(){function e(r){t.classCallCheck(this,e);var i,s,u,o,a,h,l,c,f,y,p,d,v=r.length;if(3>v)return void(this.triangles=[]);for(r=r.slice(0),u=new Array(v),i=v;i--;)u[i]=i;for(u.sort(function(t,e){return r[e][0]-r[t][0]}),o=this.sTriangle(r),r.push(o[0],o[1],o[2]),a=[this.cCircle(r,v+0,v+1,v+2)],h=[],l=[],i=u.length;i--;l.length=0){for(d=u[i],s=a.length;s--;)c=r[d][0]-a[s].x,c>0&&c*c>a[s].r?(h.push(a[s]),a.splice(s,1)):(f=r[d][1]-a[s].y,c*c+f*f-a[s].r>n||(l.push(a[s].i,a[s].j,a[s].j,a[s].k,a[s].k,a[s].i),a.splice(s,1)));for(this.deDup(l),s=l.length;s;)p=l[--s],y=l[--s],a.push(this.cCircle(r,y,p,d))}for(i=a.length;i--;)h.push(a[i]);for(a.length=0,i=h.length;i--;)h[i].i<v&&h[i].j<v&&h[i].k<v&&a.push(h[i].i,h[i].j,h[i].k);this.triangles=a}return t.createClass(e,[{key:"sTriangle",value:function(t){var e,n,r,i,s,u,o=Number.POSITIVE_INFINITY,a=Number.POSITIVE_INFINITY,h=Number.NEGATIVE_INFINITY,l=Number.NEGATIVE_INFINITY;for(e=t.length;e--;)t[e][0]<o&&(o=t[e][0]),t[e][0]>h&&(h=t[e][0]),t[e][1]<a&&(a=t[e][1]),t[e][1]>l&&(l=t[e][1]);return n=h-o,r=l-a,i=Math.max(n,r),s=o+.5*n,u=a+.5*r,[[s-20*i,u-i],[s,u+20*i],[s+20*i,u-i]]}},{key:"cCircle",value:function(t,e,r,i){var s,u,o,a,h,l,c,f,y,p,d=t[e][0],v=t[e][1],g=t[r][0],m=t[r][1],x=t[i][0],k=t[i][1],b=Math.abs(v-m),z=Math.abs(m-k);if(n>b&&n>z)throw new Error("Points!");return n>b?(a=-((x-g)/(k-m)),l=(g+x)/2,f=(m+k)/2,s=(g+d)/2,u=a*(s-l)+f):n>z?(o=-((g-d)/(m-v)),h=(d+g)/2,c=(v+m)/2,s=(x+g)/2,u=o*(s-h)+c):(o=-((g-d)/(m-v)),a=-((x-g)/(k-m)),h=(d+g)/2,l=(g+x)/2,c=(v+m)/2,f=(m+k)/2,s=(o*h-a*l+f-c)/(o-a),u=b>z?o*(s-h)+c:a*(s-l)+f),y=g-s,p=m-u,{i:e,j:r,k:i,x:s,y:u,r:y*y+p*p}}},{key:"deDup",value:function(t){var e,n,r,i,s,u;for(n=t.length;n;)for(i=t[--n],r=t[--n],e=n;e;)if(u=t[--e],s=t[--e],r===s&&i===u||r===u&&i===s){t.splice(n,2),t.splice(e,2);break}}}]),e}();e.Delaunay=r}(e||(e={}));var n;!function(e){var n=function(){function e(){var n=arguments.length<=0||void 0===arguments[0]?[0,0,0]:arguments[0];t.classCallCheck(this,e),this.xyz=n}return t.createClass(e,[{key:"toString",value:function(){return this.xyz.join(", ")}},{key:"add",value:function(t){return new e([this.x+t.x,this.y+t.y,this.z+t.z])}},{key:"subtract",value:function(t){return new e([this.x-t.x,this.y-t.y,this.z-t.z])}},{key:"divideScalar",value:function(t){var n=new e;return n.x=0==this.x?0:this.x/t,n.y=0==this.y?0:this.y/t,n.z=0==this.z?0:this.z/t,n}},{key:"multiplyScalar",value:function(t){var n=new e;return n.x=0==this.x?0:this.x*t,n.y=0==this.y?0:this.y*t,n.z=0==this.z?0:this.z*t,n}},{key:"multiplyVectors",value:function(t){var n=new e;return n.x=this.x*t.x,n.y=this.y*t.y,n.z=this.z*t.z,n}},{key:"divideVectors",value:function(t){var n=new e;return n.x=this.x/t.x,n.y=this.y/t.y,n.z=this.z/t.z,n}},{key:"cross",value:function(t){var n=new e;return n.x=this.y*t.z-this.z*t.y,n.y=this.z*t.x-this.x*t.z,n.z=this.x*t.y-this.y*t.x,n}},{key:"lengthSquared",value:function(){return this.x*this.x+this.y*this.y+this.z*this.z}},{key:"length",value:function(){return Math.sqrt(this.lengthSquared())}},{key:"normalize",value:function(){return this.divideScalar(this.length())}},{key:"distanceSquared",value:function(t){var e=this.x-t.x,n=this.y-t.y,r=this.z-t.z;return e*e+n*n+r*r}},{key:"distance",value:function(t){return Math.sqrt(this.distanceSquared(t))}},{key:"dot",value:function(t){return this.x*t.x+this.y*t.y+this.z*t.z}},{key:"min",value:function(t){var n=new e;return n.x=this.x<t.x?this.x:t.x,n.y=this.y<t.y?this.y:t.y,n.z=this.z<t.z?this.z:t.z,n}},{key:"max",value:function(t){var n=new e;return n.x=this.x>t.x?this.x:t.x,n.y=this.y>t.y?this.y:t.y,n.z=this.z>t.z?this.z:t.z,n}},{key:"eq",value:function(t){return this.x==t.x&&this.y==t.y&&this.z==t.z}},{key:"copy",value:function(){var t=new e;return t.x=this.x,t.y=this.y,t.z=this.z,t}},{key:"x",set:function(t){this.xyz[0]=t},get:function(){return this.xyz[0]}},{key:"y",set:function(t){this.xyz[1]=t},get:function(){return this.xyz[1]}},{key:"z",set:function(t){this.xyz[2]=t},get:function(){return this.xyz[2]}}]),e}();e.Three=n}(n||(n={})),Array.prototype.chunk=function(t){var e=this;return Array.apply(null,Array(Math.ceil(this.length/t))).map(function(t,e){return e}).map(function(n,r){return e.slice(r*t,r*t+t)})};var r=function(){function e(n,r,s,a){var h=this;t.classCallCheck(this,e),this.el=n,this.count=a;var l=function(){h.clear(),h.mesh=new u(h.el.offsetWidth,h.el.offsetHeight,h.count,new i(s),new i(r)),n.appendChild(o.out(h.mesh.polygons.map(function(t){return t.el}),h.el.offsetWidth,h.el.offsetHeight))};l();var c=0,f=function y(){h.mesh.blendNow()&&h.mesh.blendLights(),(0==c||c!=h.el.offsetWidth+h.el.offsetHeight)&&(c=h.el.offsetWidth+h.el.offsetHeight,l(),h.mesh.blendLights()),requestAnimationFrame(y)};requestAnimationFrame(f)}return t.createClass(e,[{key:"clear",value:function(){for(var t=this.el.childNodes.length-1;t>=0;t--)this.el.removeChild(this.el.childNodes[t])}}]),e}(),i=function(){function e(r){t.classCallCheck(this,e),this.rgb=new n.Three(r)}return t.createClass(e,[{key:"blend",value:function(t,r,i){var s=new n.Three(this.rgb.xyz);return new e(s.add(t.rgb.multiplyVectors(r.rgb).multiplyScalar(i)).xyz.map(function(t){return Math.ceil(t)}))}},{key:"shade",value:function(t){var n=this.rgb.xyz,r=0>t?0:255,i=0>t?-1*t:t,s=n[0],u=n[1],o=n[2];return new e([Math.round((r-s)*i)+s,Math.round((r-u)*i)+u,Math.round((r-o)*i)+o])}},{key:"toString",value:function(){return"rgb("+this.rgb.toString()+")"}}]),e}(),s=function(){function e(){var r=this;t.classCallCheck(this,e),this.ray=new n.Three([this.width/2,this.height/2,1.2]),self.addEventListener("mousemove",function(t){r.ray.x=t.pageX,r.ray.y=t.pageY})}return t.createClass(e,[{key:"blendLights",value:function(){for(var t=0;t<this.polygons.length;t++){var e=this.polygons[t],n=function(t){switch(e.face){case 1:return.99*Math.abs(Math.min(t,0));case 2:return.89*Math.max(Math.abs(t),0);default:return.85*Math.abs(t)}}(e.normal.dot(this.ray.subtract(e.centroid).normalize())),r=e.colour.blend(this.ambient,this.diffuse,n);e.el.setAttributeNS(null,"style","fill: "+r.toString()+"; stroke: "+r.toString()+";")}}}]),e}(),u=function(r){function i(r,s,u,o,a){t.classCallCheck(this,i);var l=t.possibleConstructorReturn(this,Object.getPrototypeOf(i).call(this));l.width=r,l.height=s,l.slices=u,l.ambient=o,l.diffuse=a;var c,f,y=0,p=l.height;for(f=new Array(u),c=u;c>=0;c--)f[c]=[y+Math.random()*r,p-Math.random()*s];for(f.push([y,p]),f.push([y+r/2,p]),f.push([y+r,p]),f.push([y+r,p-s/2]),f.push([y+r,p-s]),f.push([y+r/2,p-s]),f.push([y,p-s]),f.push([y,p-s/2]),c=6;c>=0;c--)f.push([y+Math.random()*r,p]),f.push([y,p-Math.random()*s]),f.push([y+r,p-Math.random()*s]),f.push([y+Math.random()*r,p-s]);return l.polygons=new e.Delaunay(f).triangles.chunk(3).map(function(t){var e=new Array(t.length);return e=t.map(function(t){var e=new n.Three([f[t][0],f[t][1],0]);return e}),new h(e,o)}),l}return t.inherits(i,r),t.createClass(i,[{key:"blendNow",value:function(){return this.mouseXY!=this.ray.x+this.ray.y?(this.mouseXY=this.ray.x+this.ray.y,!0):!1}}]),i}(s),o=function(){function e(){t.classCallCheck(this,e)}return t.createClass(e,[{key:"elm",value:function(t){return document.createElementNS("http://www.w3.org/2000/svg",t)}},{key:"attr",value:function(t,e){return Object.keys(e).forEach(function(n){t.setAttributeNS(null,n,e[n])}),t}}],[{key:"out",value:function(t,e,n){var r=document.createElementNS("http://www.w3.org/2000/svg","svg"),i=document.createElementNS("http://www.w3.org/2000/svg","g");return r.setAttributeNS(null,"viewBox","0 0 "+e+" "+n),r.appendChild(i),t.forEach(function(t){i.appendChild(t)}),r}}]),e}(),a=function(e){function n(){return t.classCallCheck(this,n),t.possibleConstructorReturn(this,Object.getPrototypeOf(n).apply(this,arguments))}return t.inherits(n,e),t.createClass(n,[{key:"render",value:function(){var t=this.attr(this.elm("polygon"),{"stroke-linejoin":"round","stroke-miterlimit":"1","stroke-width":"1",points:this.points.map(function(t){return t.x+" "+t.y}).join(" "),style:"fill:"+this.colour.toString()+"; stroke:"+this.colour.toString()+";"});return t}}]),n}(o),h=function(e){function r(e,n){t.classCallCheck(this,r);var i=t.possibleConstructorReturn(this,Object.getPrototypeOf(r).call(this));return i.points=e,i.colour=n,i.face=function(t){return t>50?0:50>t&&t>25?1:25>t?2:void 0}(100*Math.random()),i.el=i.render(),i.centroid=i.calcCentroid(),i.normal=i.calcNormal(),i}return t.inherits(r,e),t.createClass(r,[{key:"calcCentroid",value:function(){var t=new n.Three([this.points.map(function(t){return t.x}).reduce(function(t,e){return t+e}),this.points.map(function(t){return t.y}).reduce(function(t,e){return t+e}),this.points.map(function(t){return t.z}).reduce(function(t,e){return t+e})]);return t.divideScalar(3)}},{key:"calcNormal",value:function(){return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize()}},{key:"a",get:function(){return this.points[0]}},{key:"b",get:function(){return this.points[1]}},{key:"c",get:function(){return this.points[2]}}]),r}(a);return r});
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global.mosaic = factory());
+}(this, function () { 'use strict';
+
+    var babelHelpers = {};
+
+    babelHelpers.classCallCheck = function (instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    };
+
+    babelHelpers.createClass = function () {
+      function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+          var descriptor = props[i];
+          descriptor.enumerable = descriptor.enumerable || false;
+          descriptor.configurable = true;
+          if ("value" in descriptor) descriptor.writable = true;
+          Object.defineProperty(target, descriptor.key, descriptor);
+        }
+      }
+
+      return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) defineProperties(Constructor, staticProps);
+        return Constructor;
+      };
+    }();
+
+    babelHelpers.inherits = function (subClass, superClass) {
+      if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+      }
+
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    };
+
+    babelHelpers.possibleConstructorReturn = function (self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+
+      return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    };
+
+    babelHelpers;
+
+    // See: https://github.com/ironwallaby/delaunay/blob/master/delaunay.js
+    var Generators;
+    (function (Generators) {
+        var EPSILON = 1.0 / 1048576.0;
+
+        var Delaunay = function () {
+            function Delaunay(vertices) {
+                babelHelpers.classCallCheck(this, Delaunay);
+
+                var n = vertices.length,
+                    i,
+                    j,
+                    indices,
+                    st,
+                    open,
+                    closed,
+                    edges,
+                    dx,
+                    dy,
+                    a,
+                    b,
+                    c;
+                if (n < 3) {
+                    this.triangles = [];
+                    return;
+                }
+                vertices = vertices.slice(0);
+                indices = new Array(n);
+                for (i = n; i--;) {
+                    indices[i] = i;
+                }
+                indices.sort(function (i, j) {
+                    return vertices[j][0] - vertices[i][0];
+                });
+                st = this.sTriangle(vertices);
+                vertices.push(st[0], st[1], st[2]);
+                open = [this.cCircle(vertices, n + 0, n + 1, n + 2)];
+                closed = [];
+                edges = [];
+                for (i = indices.length; i--; edges.length = 0) {
+                    c = indices[i];
+                    for (j = open.length; j--;) {
+                        dx = vertices[c][0] - open[j].x;
+                        if (dx > 0.0 && dx * dx > open[j].r) {
+                            closed.push(open[j]);
+                            open.splice(j, 1);
+                            continue;
+                        }
+                        dy = vertices[c][1] - open[j].y;
+                        if (dx * dx + dy * dy - open[j].r > EPSILON) {
+                            continue;
+                        }
+                        edges.push(open[j].i, open[j].j, open[j].j, open[j].k, open[j].k, open[j].i);
+                        open.splice(j, 1);
+                    }
+                    this.deDup(edges);
+                    for (j = edges.length; j;) {
+                        b = edges[--j];
+                        a = edges[--j];
+                        open.push(this.cCircle(vertices, a, b, c));
+                    }
+                }
+                for (i = open.length; i--;) {
+                    closed.push(open[i]);
+                }
+                open.length = 0;
+                for (i = closed.length; i--;) {
+                    if (closed[i].i < n && closed[i].j < n && closed[i].k < n) {
+                        open.push(closed[i].i, closed[i].j, closed[i].k);
+                    }
+                }
+                this.triangles = open;
+            }
+
+            babelHelpers.createClass(Delaunay, [{
+                key: "sTriangle",
+                value: function sTriangle(v) {
+                    var xmin = Number.POSITIVE_INFINITY,
+                        ymin = Number.POSITIVE_INFINITY,
+                        xmax = Number.NEGATIVE_INFINITY,
+                        ymax = Number.NEGATIVE_INFINITY,
+                        i,
+                        dx,
+                        dy,
+                        dmax,
+                        xmid,
+                        ymid;
+                    for (i = v.length; i--;) {
+                        if (v[i][0] < xmin) xmin = v[i][0];
+                        if (v[i][0] > xmax) xmax = v[i][0];
+                        if (v[i][1] < ymin) ymin = v[i][1];
+                        if (v[i][1] > ymax) ymax = v[i][1];
+                    }
+                    dx = xmax - xmin;
+                    dy = ymax - ymin;
+                    dmax = Math.max(dx, dy);
+                    xmid = xmin + dx * 0.5;
+                    ymid = ymin + dy * 0.5;
+                    return [[xmid - 20 * dmax, ymid - dmax], [xmid, ymid + 20 * dmax], [xmid + 20 * dmax, ymid - dmax]];
+                }
+            }, {
+                key: "cCircle",
+                value: function cCircle(v, i, j, k) {
+                    var x1 = v[i][0],
+                        y1 = v[i][1],
+                        x2 = v[j][0],
+                        y2 = v[j][1],
+                        x3 = v[k][0],
+                        y3 = v[k][1],
+                        fabsy1y2 = Math.abs(y1 - y2),
+                        fabsy2y3 = Math.abs(y2 - y3),
+                        xc,
+                        yc,
+                        m1,
+                        m2,
+                        mx1,
+                        mx2,
+                        my1,
+                        my2,
+                        dx,
+                        dy;
+                    if (fabsy1y2 < EPSILON && fabsy2y3 < EPSILON) throw new Error("Points!");
+                    if (fabsy1y2 < EPSILON) {
+                        m2 = -((x3 - x2) / (y3 - y2));
+                        mx2 = (x2 + x3) / 2.0;
+                        my2 = (y2 + y3) / 2.0;
+                        xc = (x2 + x1) / 2.0;
+                        yc = m2 * (xc - mx2) + my2;
+                    } else if (fabsy2y3 < EPSILON) {
+                        m1 = -((x2 - x1) / (y2 - y1));
+                        mx1 = (x1 + x2) / 2.0;
+                        my1 = (y1 + y2) / 2.0;
+                        xc = (x3 + x2) / 2.0;
+                        yc = m1 * (xc - mx1) + my1;
+                    } else {
+                        m1 = -((x2 - x1) / (y2 - y1));
+                        m2 = -((x3 - x2) / (y3 - y2));
+                        mx1 = (x1 + x2) / 2.0;
+                        mx2 = (x2 + x3) / 2.0;
+                        my1 = (y1 + y2) / 2.0;
+                        my2 = (y2 + y3) / 2.0;
+                        xc = (m1 * mx1 - m2 * mx2 + my2 - my1) / (m1 - m2);
+                        yc = fabsy1y2 > fabsy2y3 ? m1 * (xc - mx1) + my1 : m2 * (xc - mx2) + my2;
+                    }
+                    dx = x2 - xc;
+                    dy = y2 - yc;
+                    return { i: i, j: j, k: k, x: xc, y: yc, r: dx * dx + dy * dy };
+                }
+            }, {
+                key: "deDup",
+                value: function deDup(e) {
+                    var i, j, a, b, m, n;
+                    for (j = e.length; j;) {
+                        b = e[--j];
+                        a = e[--j];
+                        for (i = j; i;) {
+                            n = e[--i];
+                            m = e[--i];
+                            if (a === m && b === n || a === n && b === m) {
+                                e.splice(j, 2);
+                                e.splice(i, 2);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }]);
+            return Delaunay;
+        }();
+
+        Generators.Delaunay = Delaunay;
+    })(Generators || (Generators = {}));
+
+    var Vector;
+    (function (Vector) {
+        var Three = function () {
+            function Three() {
+                var xyz = arguments.length <= 0 || arguments[0] === undefined ? [0, 0, 0] : arguments[0];
+                babelHelpers.classCallCheck(this, Three);
+
+                this.xyz = xyz;
+            }
+
+            babelHelpers.createClass(Three, [{
+                key: 'toString',
+                value: function toString() {
+                    return this.xyz.join(', ');
+                }
+            }, {
+                key: 'add',
+                value: function add(b) {
+                    return new Three([this.x + b.x, this.y + b.y, this.z + b.z]);
+                }
+            }, {
+                key: 'subtract',
+                value: function subtract(b) {
+                    return new Three([this.x - b.x, this.y - b.y, this.z - b.z]);
+                }
+            }, {
+                key: 'divideScalar',
+                value: function divideScalar(s) {
+                    var r = new Three();
+                    r.x = this.x == 0 ? 0 : this.x / s;
+                    r.y = this.y == 0 ? 0 : this.y / s;
+                    r.z = this.z == 0 ? 0 : this.z / s;
+                    return r;
+                }
+            }, {
+                key: 'multiplyScalar',
+                value: function multiplyScalar(s) {
+                    var r = new Three();
+                    r.x = this.x == 0 ? 0 : this.x * s;
+                    r.y = this.y == 0 ? 0 : this.y * s;
+                    r.z = this.z == 0 ? 0 : this.z * s;
+                    return r;
+                }
+            }, {
+                key: 'multiplyVectors',
+                value: function multiplyVectors(b) {
+                    var r = new Three();
+                    r.x = this.x * b.x;
+                    r.y = this.y * b.y;
+                    r.z = this.z * b.z;
+                    return r;
+                }
+            }, {
+                key: 'divideVectors',
+                value: function divideVectors(b) {
+                    var r = new Three();
+                    r.x = this.x / b.x;
+                    r.y = this.y / b.y;
+                    r.z = this.z / b.z;
+                    return r;
+                }
+            }, {
+                key: 'cross',
+                value: function cross(b) {
+                    var r = new Three();
+                    r.x = this.y * b.z - this.z * b.y;
+                    r.y = this.z * b.x - this.x * b.z;
+                    r.z = this.x * b.y - this.y * b.x;
+                    return r;
+                }
+            }, {
+                key: 'lengthSquared',
+                value: function lengthSquared() {
+                    return this.x * this.x + this.y * this.y + this.z * this.z;
+                }
+            }, {
+                key: 'length',
+                value: function length() {
+                    return Math.sqrt(this.lengthSquared());
+                }
+            }, {
+                key: 'normalize',
+                value: function normalize() {
+                    return this.divideScalar(this.length());
+                }
+            }, {
+                key: 'distanceSquared',
+                value: function distanceSquared(b) {
+                    var dx = this.x - b.x;
+                    var dy = this.y - b.y;
+                    var dz = this.z - b.z;
+                    return dx * dx + dy * dy + dz * dz;
+                }
+            }, {
+                key: 'distance',
+                value: function distance(b) {
+                    return Math.sqrt(this.distanceSquared(b));
+                }
+            }, {
+                key: 'dot',
+                value: function dot(b) {
+                    return this.x * b.x + this.y * b.y + this.z * b.z;
+                }
+            }, {
+                key: 'min',
+                value: function min(b) {
+                    var r = new Three();
+                    r.x = this.x < b.x ? this.x : b.x;
+                    r.y = this.y < b.y ? this.y : b.y;
+                    r.z = this.z < b.z ? this.z : b.z;
+                    return r;
+                }
+            }, {
+                key: 'max',
+                value: function max(b) {
+                    var r = new Three();
+                    r.x = this.x > b.x ? this.x : b.x;
+                    r.y = this.y > b.y ? this.y : b.y;
+                    r.z = this.z > b.z ? this.z : b.z;
+                    return r;
+                }
+            }, {
+                key: 'eq',
+                value: function eq(b) {
+                    return this.x == b.x && this.y == b.y && this.z == b.z;
+                }
+            }, {
+                key: 'copy',
+                value: function copy() {
+                    var r = new Three();
+                    r.x = this.x;
+                    r.y = this.y;
+                    r.z = this.z;
+                    return r;
+                }
+            }, {
+                key: 'x',
+                set: function set(v) {
+                    this.xyz[0] = v;
+                },
+                get: function get() {
+                    return this.xyz[0];
+                }
+            }, {
+                key: 'y',
+                set: function set(v) {
+                    this.xyz[1] = v;
+                },
+                get: function get() {
+                    return this.xyz[1];
+                }
+            }, {
+                key: 'z',
+                set: function set(v) {
+                    this.xyz[2] = v;
+                },
+                get: function get() {
+                    return this.xyz[2];
+                }
+            }]);
+            return Three;
+        }();
+
+        Vector.Three = Three;
+    })(Vector || (Vector = {}));
+
+    ///<reference path="lib/Common.ts"/>
+    Array.prototype.chunk = function (n) {
+        var _this = this;
+
+        return Array.apply(null, Array(Math.ceil(this.length / n))).map(function (x, i) {
+            return i;
+        }).map(function (x, i) {
+            return _this.slice(i * n, i * n + n);
+        });
+    };
+    var Mosaic = function () {
+        function Mosaic(el, diffuse, ambient, count) {
+            var _this2 = this;
+
+            babelHelpers.classCallCheck(this, Mosaic);
+
+            this.el = el;
+            this.count = count;
+            var run = function run() {
+                _this2.clear();
+                _this2.mesh = new Mesh(_this2.el.offsetWidth, _this2.el.offsetHeight, _this2.count, new Colour(ambient), new Colour(diffuse));
+                el.appendChild(SVG.out(_this2.mesh.polygons.map(function (v) {
+                    return v.el;
+                }), _this2.el.offsetWidth, _this2.el.offsetHeight));
+            };
+            run();
+            var screenWH = 0;
+            var render = function render() {
+                if (_this2.mesh.blendNow()) {
+                    _this2.mesh.blendLights();
+                }
+                if (screenWH == 0 || screenWH != _this2.el.offsetWidth + _this2.el.offsetHeight) {
+                    screenWH = _this2.el.offsetWidth + _this2.el.offsetHeight;
+                    run();
+                    _this2.mesh.blendLights();
+                }
+                requestAnimationFrame(render);
+            };
+            render();
+        }
+
+        babelHelpers.createClass(Mosaic, [{
+            key: 'clear',
+            value: function clear() {
+                for (var i = this.el.childNodes.length - 1; i >= 0; i--) {
+                    this.el.removeChild(this.el.childNodes[i]);
+                }
+            }
+        }]);
+        return Mosaic;
+    }();
+
+    var Colour = function () {
+        function Colour(rgb) {
+            babelHelpers.classCallCheck(this, Colour);
+
+            this.rgb = new Vector.Three(rgb);
+        }
+
+        babelHelpers.createClass(Colour, [{
+            key: 'blend',
+            value: function blend(d, a, lum) {
+                var r = new Vector.Three(this.rgb.xyz);
+                return new Colour(r.add(d.rgb.multiplyVectors(a.rgb).multiplyScalar(lum)).xyz.map(function (v) {
+                    return Math.ceil(v);
+                }));
+            }
+        }, {
+            key: 'shade',
+            value: function shade(percent) {
+                var f = this.rgb.xyz,
+                    t = percent < 0 ? 0 : 255,
+                    p = percent < 0 ? percent * -1 : percent,
+                    R = f[0],
+                    G = f[1],
+                    B = f[2];
+                return new Colour([Math.round((t - R) * p) + R, Math.round((t - G) * p) + G, Math.round((t - B) * p) + B]);
+            }
+        }, {
+            key: 'toString',
+            value: function toString() {
+                return 'rgb(' + this.rgb.toString() + ')';
+            }
+        }]);
+        return Colour;
+    }();
+
+    var Light = function () {
+        function Light() {
+            var _this3 = this;
+
+            babelHelpers.classCallCheck(this, Light);
+
+            this.ray = new Vector.Three([this.width / 2, this.height / 2, 1.2]);
+            self.addEventListener('mousemove', function (e) {
+                _this3.ray.x = e.pageX;
+                _this3.ray.y = e.pageY;
+            });
+        }
+
+        babelHelpers.createClass(Light, [{
+            key: 'blendLights',
+            value: function blendLights() {
+                for (var i = 0; i < this.polygons.length; i++) {
+                    var item = this.polygons[i],
+                        ill = function (n) {
+                        switch (item.face) {
+                            case 1:
+                                return Math.abs(Math.min(n, 0)) * 0.99;
+                            case 2:
+                                return Math.max(Math.abs(n), 0) * 0.89;
+                            default:
+                                return Math.abs(n) * 0.85;
+                        }
+                    }(item.normal.dot(this.ray.subtract(item.centroid).normalize()));
+                    var c = item.colour.blend(this.ambient, this.diffuse, ill);
+                    item.el.setAttributeNS(null, 'style', 'fill: ' + c.toString() + '; stroke: ' + c.toString() + ';');
+                }
+            }
+        }]);
+        return Light;
+    }();
+
+    var Mesh = function (_Light) {
+        babelHelpers.inherits(Mesh, _Light);
+
+        function Mesh(width, height, slices, ambient, diffuse) {
+            babelHelpers.classCallCheck(this, Mesh);
+
+            var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Mesh).call(this));
+
+            _this4.width = width;
+            _this4.height = height;
+            _this4.slices = slices;
+            _this4.ambient = ambient;
+            _this4.diffuse = diffuse;
+            var i,
+                x,
+                y,
+                vertices,
+                offsetX = 0,
+                offsetY = _this4.height;
+            vertices = new Array(slices);
+            for (i = slices; i >= 0; i--) {
+                vertices[i] = [offsetX + Math.random() * width, offsetY - Math.random() * height];
+            }
+            vertices.push([offsetX, offsetY]);
+            vertices.push([offsetX + width / 2, offsetY]);
+            vertices.push([offsetX + width, offsetY]);
+            vertices.push([offsetX + width, offsetY - height / 2]);
+            vertices.push([offsetX + width, offsetY - height]);
+            vertices.push([offsetX + width / 2, offsetY - height]);
+            vertices.push([offsetX, offsetY - height]);
+            vertices.push([offsetX, offsetY - height / 2]);
+            for (i = 6; i >= 0; i--) {
+                vertices.push([offsetX + Math.random() * width, offsetY]);
+                vertices.push([offsetX, offsetY - Math.random() * height]);
+                vertices.push([offsetX + width, offsetY - Math.random() * height]);
+                vertices.push([offsetX + Math.random() * width, offsetY - height]);
+            }
+            _this4.polygons = new Generators.Delaunay(vertices).triangles.chunk(3).map(function (v) {
+                var a = new Array(v.length);
+                a = v.map(function (i) {
+                    var t = new Vector.Three([vertices[i][0], vertices[i][1], 0]);
+                    return t;
+                });
+                return new Triangle(a, ambient);
+            });
+            return _this4;
+        }
+
+        babelHelpers.createClass(Mesh, [{
+            key: 'blendNow',
+            value: function blendNow() {
+                if (this.mouseXY != this.ray.x + this.ray.y) {
+                    this.mouseXY = this.ray.x + this.ray.y;
+                    return true;
+                }
+                return false;
+            }
+        }]);
+        return Mesh;
+    }(Light);
+
+    var SVG = function () {
+        function SVG() {
+            babelHelpers.classCallCheck(this, SVG);
+        }
+
+        babelHelpers.createClass(SVG, [{
+            key: 'elm',
+            value: function elm(type) {
+                return document.createElementNS('http://www.w3.org/2000/svg', type);
+            }
+        }, {
+            key: 'attr',
+            value: function attr(el, a) {
+                Object.keys(a).forEach(function (k) {
+                    el.setAttributeNS(null, k, a[k]);
+                });
+                return el;
+            }
+        }], [{
+            key: 'out',
+            value: function out(items, width, height) {
+                var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+                    g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                s.setAttributeNS(null, 'viewBox', '0 0 ' + width + ' ' + height);
+                s.appendChild(g);
+                items.forEach(function (v) {
+                    g.appendChild(v);
+                });
+                return s;
+            }
+        }]);
+        return SVG;
+    }();
+
+    var Polygon = function (_SVG) {
+        babelHelpers.inherits(Polygon, _SVG);
+
+        function Polygon() {
+            babelHelpers.classCallCheck(this, Polygon);
+            return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Polygon).apply(this, arguments));
+        }
+
+        babelHelpers.createClass(Polygon, [{
+            key: 'render',
+            value: function render() {
+                var t = this.attr(this.elm('polygon'), {
+                    'stroke-linejoin': 'round',
+                    'stroke-miterlimit': '1',
+                    'stroke-width': '1',
+                    'points': this.points.map(function (v) {
+                        return v.x + ' ' + v.y;
+                    }).join(' '),
+                    'style': 'fill:' + this.colour.toString() + '; stroke:' + this.colour.toString() + ';'
+                });
+                return t;
+            }
+        }]);
+        return Polygon;
+    }(SVG);
+
+    var Triangle = function (_Polygon) {
+        babelHelpers.inherits(Triangle, _Polygon);
+
+        function Triangle(v, colour) {
+            babelHelpers.classCallCheck(this, Triangle);
+
+            var _this6 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Triangle).call(this));
+
+            _this6.points = v;
+            _this6.colour = colour;
+            _this6.face = function (n) {
+                if (n > 50) {
+                    return 0;
+                }
+                if (n < 50 && n > 25) {
+                    return 1;
+                }
+                if (n < 25) {
+                    return 2;
+                }
+            }(Math.random() * 100);
+            _this6.el = _this6.render();
+            _this6.centroid = _this6.calcCentroid();
+            _this6.normal = _this6.calcNormal();
+            return _this6;
+        }
+
+        babelHelpers.createClass(Triangle, [{
+            key: 'calcCentroid',
+            value: function calcCentroid() {
+                var r = new Vector.Three([
+                // Sum of all x's
+                this.points.map(function (v) {
+                    return v.x;
+                }).reduce(function (a, b) {
+                    return a + b;
+                }),
+                // Sum of all y's
+                this.points.map(function (v) {
+                    return v.y;
+                }).reduce(function (a, b) {
+                    return a + b;
+                }),
+                // Sum of all z's
+                this.points.map(function (v) {
+                    return v.z;
+                }).reduce(function (a, b) {
+                    return a + b;
+                })]);
+                return r.divideScalar(3);
+            }
+        }, {
+            key: 'calcNormal',
+            value: function calcNormal() {
+                return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize();
+            }
+        }, {
+            key: 'a',
+            get: function get() {
+                return this.points[0];
+            }
+        }, {
+            key: 'b',
+            get: function get() {
+                return this.points[1];
+            }
+        }, {
+            key: 'c',
+            get: function get() {
+                return this.points[2];
+            }
+        }]);
+        return Triangle;
+    }(Polygon);
+    //new Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);
+
+    return Mosaic;
+
+}));
