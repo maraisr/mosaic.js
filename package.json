@@ -1,6 +1,6 @@
 {
   "name": "mosaic-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Real time Delaunay triangulation! Shaded, shaped and plotted!",
   "author": "Marais Rossouw",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "clean": "rm -rf dist/* tmp/*",
     "prebuild": "npm run clean",
     "build": "tsc && rollup -c rollup.conf.js",
-	"postbuild": "uglifyjs dist/mosaic.js -c -m -o dist/mosaic.min.js"
+    "postbuild": "uglifyjs dist/mosaic.js -c -m -o dist/mosaic.min.js"
   },
   "homepage": "https://github.com/maraisr/mosaic.js#readme",
   "repository": {
