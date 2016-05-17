@@ -483,12 +483,13 @@
     }();
 
     var Light = function () {
-        function Light() {
+        function Light(ray) {
             var _this3 = this;
 
             babelHelpers.classCallCheck(this, Light);
 
-            this.ray = new Vector.Three([this.width / 2, this.height / 2, 1.2]);
+            this.ray = ray;
+            this.ray = ray;
             self.addEventListener('mousemove', function (e) {
                 _this3.ray.x = e.pageX;
                 _this3.ray.y = e.pageY;
@@ -524,7 +525,7 @@
         function Mesh(width, height, slices, ambient, diffuse) {
             babelHelpers.classCallCheck(this, Mesh);
 
-            var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Mesh).call(this));
+            var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Mesh).call(this, new Vector.Three([width / 2, height / 2, 1.2])));
 
             _this4.width = width;
             _this4.height = height;

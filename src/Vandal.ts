@@ -81,8 +81,6 @@ class Colour {
 }
 
 class Light {
-	ray: Vector.Three;
-
 	ambient: Colour;
 	diffuse: Colour;
 
@@ -91,8 +89,8 @@ class Light {
 
 	polygons: Array<Triangle>;
 
-	constructor() {
-		this.ray = new Vector.Three([(this.width / 2), (this.height / 2), 1.2]);
+	constructor(public ray:Vector.Three) {
+		this.ray = ray;
 
 		self.addEventListener('mousemove', (e: MouseEvent) => {
 			this.ray.x = e.pageX;
@@ -127,7 +125,7 @@ class Mesh extends Light {
 	private mouseXY: number;
 
 	constructor(width: number, height: number, slices: number, ambient: Colour, diffuse: Colour) {
-		super();
+		super(new Vector.Three([(width / 2), (height / 2), 1.2]));
 
 		this.width = width;
 		this.height = height;
