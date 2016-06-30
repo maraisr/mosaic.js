@@ -28,10 +28,10 @@
   ],
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
-    "babel-preset-stage-2": "^6.5.0",
-    "rollup": "^0.25.8",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-includepaths": "^0.1.2",
+    "babelrc-rollup": "^1.1.0",
+    "rollup": "^0.33.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-includepaths": "^0.1.5",
     "uglifyjs": "^2.4.10"
   }
 }

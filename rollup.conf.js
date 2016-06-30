@@ -1,17 +1,24 @@
-var babel = require('rollup-plugin-babel'),
-	includePaths = require('rollup-plugin-includepaths');
+import babel from 'rollup-plugin-babel';
+import babelrc from 'babelrc-rollup';
+import includePaths from 'rollup-plugin-includepaths';
 
-module.exports = {
+let pkg = require('./package.json');
+
+export default {
 	entry: 'tmp/Vandal.js',
-	dest: 'dist/mosaic.js',
 	plugins: [
 		includePaths({
 			paths: ['tmp'],
 			extensions: ['.js']
 		}),
-		babel()
+		babel(babelrc())
 	],
-	format: 'umd',
-	moduleName: 'mosaic',
-	sourceMap: false
+	targets: [
+		{
+			dest: pkg['main'],
+			format: 'umd',
+			moduleName: 'mosaic',
+			sourceMap: false,
+		}
+	]
 };
