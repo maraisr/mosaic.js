@@ -1,15 +1,17 @@
 {
+	"compileOnSave": true,
 	"compilerOptions": {
 		"module": "es2015",
 		"target": "es2015",
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"noImplicitAny": false,
-		"removeComments": false,
+		"removeComments": true,
 		"sourceMap": false,
 		"outDir": "tmp/"
 	},
 	"files": [
+		"src/lib/common.ts",
 		"src/Vandal.ts"
 	]
 }

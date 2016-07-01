@@ -1,11 +1,13 @@
-///<reference path="lib/Common.ts"/>
+import Colour from './lib/colour';
+import {Generators} from './lib/generators';
+import {Vector} from './lib/vector';
+
+import SVG from './svg/index';
+import {Triangle} from './svg/polygon';
 
 Array.prototype.chunk = function (n: number): Array<any> {
 	return Array.apply(null, Array(Math.ceil(this.length / n))).map((x: number, i: number) => i).map((x: number, i: number) => this.slice(i * n, i * n + n));
 }
-
-import {Generators} from './lib/Generators';
-import {Vector} from './lib/Vector';
 
 export default class Mosaic {
 	private el: HTMLElement;
@@ -52,31 +54,6 @@ export default class Mosaic {
 		for (var i = this.el.childNodes.length - 1; i >= 0; i--) {
 			this.el.removeChild(this.el.childNodes[i]);
 		}
-	}
-}
-
-class Colour {
-	rgb: Vector.Three;
-
-	constructor(rgb: Array<number>) {
-		this.rgb = new Vector.Three(rgb);
-	}
-
-	blend(d: Colour, a: Colour, lum: number): Colour {
-		var r: Vector.Three = new Vector.Three(this.rgb.xyz);
-
-		return new Colour(r.add(d.rgb.multiplyVectors(a.rgb).multiplyScalar(lum)).xyz.map((v: number) => {
-			return Math.ceil(v);
-		}));
-	}
-
-	shade(percent: number): Colour {
-		var f = this.rgb.xyz, t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f[0], G = f[1], B = f[2];
-		return new Colour([(Math.round((t - R) * p) + R), (Math.round((t - G) * p) + G), (Math.round((t - B) * p) + B)]);
-	}
-
-	toString() {
-		return 'rgb(' + this.rgb.toString() + ')';
 	}
 }
 
@@ -181,128 +158,3 @@ class Mesh extends Light {
 		return false;
 	}
 }
-
-class SVG {
-	elm(type: string): Element {
-		return document.createElementNS('http://www.w3.org/2000/svg', type);
-	}
-
-	attr(el: Element, a: any): Element {
-		Object.keys(a).forEach((k: string) => {
-			el.setAttributeNS(null, k, a[k]);
-		});
-
-		return el;
-	}
-
-	static out(items: Array<Element>, width: number, height: number): Element {
-		var s: Element = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
-			g: Element = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-
-		s.setAttributeNS(null, 'viewBox', '0 0 ' + width + ' ' + height);
-		s.appendChild(g);
-
-		items.forEach((v: Element) => {
-			g.appendChild(v);
-		});
-
-		return s;
-	}
-}
-
-class Polygon extends SVG {
-	points: Array<Vector.Three>;
-	colour: Colour;
-
-	render(): Element {
-		var t: Element = this.attr(this.elm('polygon'), {
-			'stroke-linejoin': 'round',
-			'stroke-miterlimit': '1',
-			'stroke-width': '1',
-			'points': this.points.map((v: Vector.Three) => {
-				return v.x + ' ' + v.y;
-			}).join(' '),
-			'style': 'fill:' + this.colour.toString() + '; stroke:' + this.colour.toString() + ';'
-		});
-
-		return t;
-	}
-}
-
-class Triangle extends Polygon {
-	el: Element;
-
-	centroid: Vector.Three;
-	normal: Vector.Three;
-
-	face: number;
-
-	constructor(v: Array<Vector.Three>, colour: Colour) {
-		super();
-
-		this.points = v;
-		this.colour = colour;
-		this.face = ((n: number) => {
-			if (n > 50) {
-				return 0;
-			}
-
-			if (n < 50 && n > 25) {
-				return 1;
-			}
-
-			if (n < 25) {
-				return 2;
-			}
-		})(Math.random() * 100);
-
-		this.el = this.render();
-
-		this.centroid = this.calcCentroid();
-		this.normal = this.calcNormal();
-	}
-
-	calcCentroid(): Vector.Three {
-
-		var r: Vector.Three = new Vector.Three([
-			// Sum of all x's
-			this.points.map((v: Vector.Three) => {
-				return v.x;
-			}).reduce((a: number, b: number) => {
-				return a + b;
-			}),
-			// Sum of all y's
-			this.points.map((v: Vector.Three) => {
-				return v.y;
-			}).reduce((a: number, b: number) => {
-				return a + b;
-			}),
-			// Sum of all z's
-			this.points.map((v: Vector.Three) => {
-				return v.z;
-			}).reduce((a: number, b: number) => {
-				return a + b;
-			})
-		]);
-
-		return r.divideScalar(3);
-	}
-
-	calcNormal(): Vector.Three {
-		return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize();
-	}
-
-	get a(): Vector.Three {
-		return this.points[0];
-	}
-
-	get b(): Vector.Three {
-		return this.points[1];
-	}
-
-	get c(): Vector.Three {
-		return this.points[2];
-	}
-}
-
-//new Vandal.Mosaic(document.getElementById('vandal'), [86, 200, 148], [25, 52, 65], 250);

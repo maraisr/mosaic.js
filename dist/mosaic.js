@@ -52,7 +52,207 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   };
 
-  // See: https://github.com/ironwallaby/delaunay/blob/master/delaunay.js
+  var Vector;
+  (function (Vector) {
+      var Three = function () {
+          function Three() {
+              var xyz = arguments.length <= 0 || arguments[0] === undefined ? [0, 0, 0] : arguments[0];
+              classCallCheck(this, Three);
+
+              this.xyz = xyz;
+          }
+
+          createClass(Three, [{
+              key: 'toString',
+              value: function toString() {
+                  return this.xyz.join(', ');
+              }
+          }, {
+              key: 'add',
+              value: function add(b) {
+                  return new Three([this.x + b.x, this.y + b.y, this.z + b.z]);
+              }
+          }, {
+              key: 'subtract',
+              value: function subtract(b) {
+                  return new Three([this.x - b.x, this.y - b.y, this.z - b.z]);
+              }
+          }, {
+              key: 'divideScalar',
+              value: function divideScalar(s) {
+                  var r = new Three();
+                  r.x = this.x == 0 ? 0 : this.x / s;
+                  r.y = this.y == 0 ? 0 : this.y / s;
+                  r.z = this.z == 0 ? 0 : this.z / s;
+                  return r;
+              }
+          }, {
+              key: 'multiplyScalar',
+              value: function multiplyScalar(s) {
+                  var r = new Three();
+                  r.x = this.x == 0 ? 0 : this.x * s;
+                  r.y = this.y == 0 ? 0 : this.y * s;
+                  r.z = this.z == 0 ? 0 : this.z * s;
+                  return r;
+              }
+          }, {
+              key: 'multiplyVectors',
+              value: function multiplyVectors(b) {
+                  var r = new Three();
+                  r.x = this.x * b.x;
+                  r.y = this.y * b.y;
+                  r.z = this.z * b.z;
+                  return r;
+              }
+          }, {
+              key: 'divideVectors',
+              value: function divideVectors(b) {
+                  var r = new Three();
+                  r.x = this.x / b.x;
+                  r.y = this.y / b.y;
+                  r.z = this.z / b.z;
+                  return r;
+              }
+          }, {
+              key: 'cross',
+              value: function cross(b) {
+                  var r = new Three();
+                  r.x = this.y * b.z - this.z * b.y;
+                  r.y = this.z * b.x - this.x * b.z;
+                  r.z = this.x * b.y - this.y * b.x;
+                  return r;
+              }
+          }, {
+              key: 'lengthSquared',
+              value: function lengthSquared() {
+                  return this.x * this.x + this.y * this.y + this.z * this.z;
+              }
+          }, {
+              key: 'length',
+              value: function length() {
+                  return Math.sqrt(this.lengthSquared());
+              }
+          }, {
+              key: 'normalize',
+              value: function normalize() {
+                  return this.divideScalar(this.length());
+              }
+          }, {
+              key: 'distanceSquared',
+              value: function distanceSquared(b) {
+                  var dx = this.x - b.x;
+                  var dy = this.y - b.y;
+                  var dz = this.z - b.z;
+                  return dx * dx + dy * dy + dz * dz;
+              }
+          }, {
+              key: 'distance',
+              value: function distance(b) {
+                  return Math.sqrt(this.distanceSquared(b));
+              }
+          }, {
+              key: 'dot',
+              value: function dot(b) {
+                  return this.x * b.x + this.y * b.y + this.z * b.z;
+              }
+          }, {
+              key: 'min',
+              value: function min(b) {
+                  var r = new Three();
+                  r.x = this.x < b.x ? this.x : b.x;
+                  r.y = this.y < b.y ? this.y : b.y;
+                  r.z = this.z < b.z ? this.z : b.z;
+                  return r;
+              }
+          }, {
+              key: 'max',
+              value: function max(b) {
+                  var r = new Three();
+                  r.x = this.x > b.x ? this.x : b.x;
+                  r.y = this.y > b.y ? this.y : b.y;
+                  r.z = this.z > b.z ? this.z : b.z;
+                  return r;
+              }
+          }, {
+              key: 'eq',
+              value: function eq(b) {
+                  return this.x == b.x && this.y == b.y && this.z == b.z;
+              }
+          }, {
+              key: 'copy',
+              value: function copy() {
+                  var r = new Three();
+                  r.x = this.x;
+                  r.y = this.y;
+                  r.z = this.z;
+                  return r;
+              }
+          }, {
+              key: 'x',
+              set: function set(v) {
+                  this.xyz[0] = v;
+              },
+              get: function get() {
+                  return this.xyz[0];
+              }
+          }, {
+              key: 'y',
+              set: function set(v) {
+                  this.xyz[1] = v;
+              },
+              get: function get() {
+                  return this.xyz[1];
+              }
+          }, {
+              key: 'z',
+              set: function set(v) {
+                  this.xyz[2] = v;
+              },
+              get: function get() {
+                  return this.xyz[2];
+              }
+          }]);
+          return Three;
+      }();
+
+      Vector.Three = Three;
+  })(Vector || (Vector = {}));
+
+  var Colour = function () {
+      function Colour(rgb) {
+          classCallCheck(this, Colour);
+
+          this.rgb = new Vector.Three(rgb);
+      }
+
+      createClass(Colour, [{
+          key: 'blend',
+          value: function blend(d, a, lum) {
+              var r = new Vector.Three(this.rgb.xyz);
+              return new Colour(r.add(d.rgb.multiplyVectors(a.rgb).multiplyScalar(lum)).xyz.map(function (v) {
+                  return Math.ceil(v);
+              }));
+          }
+      }, {
+          key: 'shade',
+          value: function shade(percent) {
+              var f = this.rgb.xyz,
+                  t = percent < 0 ? 0 : 255,
+                  p = percent < 0 ? percent * -1 : percent,
+                  R = f[0],
+                  G = f[1],
+                  B = f[2];
+              return new Colour([Math.round((t - R) * p) + R, Math.round((t - G) * p) + G, Math.round((t - B) * p) + B]);
+          }
+      }, {
+          key: 'toString',
+          value: function toString() {
+              return 'rgb(' + this.rgb.toString() + ')';
+          }
+      }]);
+      return Colour;
+  }();
+
   var Generators;
   (function (Generators) {
       var EPSILON = 1.0 / 1048576.0;
@@ -225,7 +425,41 @@
       Generators.Delaunay = Delaunay;
   })(Generators || (Generators = {}));
 
-  var Vector;
+  var SVG = function () {
+      function SVG() {
+          classCallCheck(this, SVG);
+      }
+
+      createClass(SVG, [{
+          key: 'elm',
+          value: function elm(type) {
+              return document.createElementNS('http://www.w3.org/2000/svg', type);
+          }
+      }, {
+          key: 'attr',
+          value: function attr(el, a) {
+              Object.keys(a).forEach(function (k) {
+                  el.setAttributeNS(null, k, a[k]);
+              });
+              return el;
+          }
+      }], [{
+          key: 'out',
+          value: function out(items, width, height) {
+              var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+                  g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+              s.setAttributeNS(null, 'viewBox', '0 0 ' + width + ' ' + height);
+              s.appendChild(g);
+              items.forEach(function (v) {
+                  g.appendChild(v);
+              });
+              return s;
+          }
+      }]);
+      return SVG;
+  }();
+
+  var Vector$1;
   (function (Vector) {
       var Three = function () {
           function Three() {
@@ -389,9 +623,103 @@
       }();
 
       Vector.Three = Three;
-  })(Vector || (Vector = {}));
+  })(Vector$1 || (Vector$1 = {}));
 
-  ///<reference path="lib/Common.ts"/>
+  var Polygon = function (_SVG) {
+      inherits(Polygon, _SVG);
+
+      function Polygon() {
+          classCallCheck(this, Polygon);
+          return possibleConstructorReturn(this, Object.getPrototypeOf(Polygon).apply(this, arguments));
+      }
+
+      createClass(Polygon, [{
+          key: 'render',
+          value: function render() {
+              var t = this.attr(this.elm('polygon'), {
+                  'stroke-linejoin': 'round',
+                  'stroke-miterlimit': '1',
+                  'stroke-width': '1',
+                  'points': this.points.map(function (v) {
+                      return v.x + ' ' + v.y;
+                  }).join(' '),
+                  'style': 'fill:' + this.colour.toString() + '; stroke:' + this.colour.toString() + ';'
+              });
+              return t;
+          }
+      }]);
+      return Polygon;
+  }(SVG);
+
+  var Triangle = function (_Polygon) {
+      inherits(Triangle, _Polygon);
+
+      function Triangle(v, colour) {
+          classCallCheck(this, Triangle);
+
+          var _this2 = possibleConstructorReturn(this, Object.getPrototypeOf(Triangle).call(this));
+
+          _this2.points = v;
+          _this2.colour = colour;
+          _this2.face = function (n) {
+              if (n > 50) {
+                  return 0;
+              }
+              if (n < 50 && n > 25) {
+                  return 1;
+              }
+              if (n < 25) {
+                  return 2;
+              }
+          }(Math.random() * 100);
+          _this2.el = _this2.render();
+          _this2.centroid = _this2.calcCentroid();
+          _this2.normal = _this2.calcNormal();
+          return _this2;
+      }
+
+      createClass(Triangle, [{
+          key: 'calcCentroid',
+          value: function calcCentroid() {
+              var r = new Vector$1.Three([this.points.map(function (v) {
+                  return v.x;
+              }).reduce(function (a, b) {
+                  return a + b;
+              }), this.points.map(function (v) {
+                  return v.y;
+              }).reduce(function (a, b) {
+                  return a + b;
+              }), this.points.map(function (v) {
+                  return v.z;
+              }).reduce(function (a, b) {
+                  return a + b;
+              })]);
+              return r.divideScalar(3);
+          }
+      }, {
+          key: 'calcNormal',
+          value: function calcNormal() {
+              return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize();
+          }
+      }, {
+          key: 'a',
+          get: function get() {
+              return this.points[0];
+          }
+      }, {
+          key: 'b',
+          get: function get() {
+              return this.points[1];
+          }
+      }, {
+          key: 'c',
+          get: function get() {
+              return this.points[2];
+          }
+      }]);
+      return Triangle;
+  }(Polygon);
+
   Array.prototype.chunk = function (n) {
       var _this = this;
 
@@ -401,6 +729,7 @@
           return _this.slice(i * n, i * n + n);
       });
   };
+
   var Mosaic = function () {
       function Mosaic(el, diffuse, ambient, count) {
           var _this2 = this;
@@ -441,41 +770,6 @@
           }
       }]);
       return Mosaic;
-  }();
-
-  var Colour = function () {
-      function Colour(rgb) {
-          classCallCheck(this, Colour);
-
-          this.rgb = new Vector.Three(rgb);
-      }
-
-      createClass(Colour, [{
-          key: 'blend',
-          value: function blend(d, a, lum) {
-              var r = new Vector.Three(this.rgb.xyz);
-              return new Colour(r.add(d.rgb.multiplyVectors(a.rgb).multiplyScalar(lum)).xyz.map(function (v) {
-                  return Math.ceil(v);
-              }));
-          }
-      }, {
-          key: 'shade',
-          value: function shade(percent) {
-              var f = this.rgb.xyz,
-                  t = percent < 0 ? 0 : 255,
-                  p = percent < 0 ? percent * -1 : percent,
-                  R = f[0],
-                  G = f[1],
-                  B = f[2];
-              return new Colour([Math.round((t - R) * p) + R, Math.round((t - G) * p) + G, Math.round((t - B) * p) + B]);
-          }
-      }, {
-          key: 'toString',
-          value: function toString() {
-              return 'rgb(' + this.rgb.toString() + ')';
-          }
-      }]);
-      return Colour;
   }();
 
   var Light = function () {
@@ -575,141 +869,6 @@
       }]);
       return Mesh;
   }(Light);
-
-  var SVG = function () {
-      function SVG() {
-          classCallCheck(this, SVG);
-      }
-
-      createClass(SVG, [{
-          key: 'elm',
-          value: function elm(type) {
-              return document.createElementNS('http://www.w3.org/2000/svg', type);
-          }
-      }, {
-          key: 'attr',
-          value: function attr(el, a) {
-              Object.keys(a).forEach(function (k) {
-                  el.setAttributeNS(null, k, a[k]);
-              });
-              return el;
-          }
-      }], [{
-          key: 'out',
-          value: function out(items, width, height) {
-              var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
-                  g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-              s.setAttributeNS(null, 'viewBox', '0 0 ' + width + ' ' + height);
-              s.appendChild(g);
-              items.forEach(function (v) {
-                  g.appendChild(v);
-              });
-              return s;
-          }
-      }]);
-      return SVG;
-  }();
-
-  var Polygon = function (_SVG) {
-      inherits(Polygon, _SVG);
-
-      function Polygon() {
-          classCallCheck(this, Polygon);
-          return possibleConstructorReturn(this, Object.getPrototypeOf(Polygon).apply(this, arguments));
-      }
-
-      createClass(Polygon, [{
-          key: 'render',
-          value: function render() {
-              var t = this.attr(this.elm('polygon'), {
-                  'stroke-linejoin': 'round',
-                  'stroke-miterlimit': '1',
-                  'stroke-width': '1',
-                  'points': this.points.map(function (v) {
-                      return v.x + ' ' + v.y;
-                  }).join(' '),
-                  'style': 'fill:' + this.colour.toString() + '; stroke:' + this.colour.toString() + ';'
-              });
-              return t;
-          }
-      }]);
-      return Polygon;
-  }(SVG);
-
-  var Triangle = function (_Polygon) {
-      inherits(Triangle, _Polygon);
-
-      function Triangle(v, colour) {
-          classCallCheck(this, Triangle);
-
-          var _this6 = possibleConstructorReturn(this, Object.getPrototypeOf(Triangle).call(this));
-
-          _this6.points = v;
-          _this6.colour = colour;
-          _this6.face = function (n) {
-              if (n > 50) {
-                  return 0;
-              }
-              if (n < 50 && n > 25) {
-                  return 1;
-              }
-              if (n < 25) {
-                  return 2;
-              }
-          }(Math.random() * 100);
-          _this6.el = _this6.render();
-          _this6.centroid = _this6.calcCentroid();
-          _this6.normal = _this6.calcNormal();
-          return _this6;
-      }
-
-      createClass(Triangle, [{
-          key: 'calcCentroid',
-          value: function calcCentroid() {
-              var r = new Vector.Three([
-              // Sum of all x's
-              this.points.map(function (v) {
-                  return v.x;
-              }).reduce(function (a, b) {
-                  return a + b;
-              }),
-              // Sum of all y's
-              this.points.map(function (v) {
-                  return v.y;
-              }).reduce(function (a, b) {
-                  return a + b;
-              }),
-              // Sum of all z's
-              this.points.map(function (v) {
-                  return v.z;
-              }).reduce(function (a, b) {
-                  return a + b;
-              })]);
-              return r.divideScalar(3);
-          }
-      }, {
-          key: 'calcNormal',
-          value: function calcNormal() {
-              return this.a.subtract(this.b).cross(this.a.subtract(this.c)).normalize();
-          }
-      }, {
-          key: 'a',
-          get: function get() {
-              return this.points[0];
-          }
-      }, {
-          key: 'b',
-          get: function get() {
-              return this.points[1];
-          }
-      }, {
-          key: 'c',
-          get: function get() {
-              return this.points[2];
-          }
-      }]);
-      return Triangle;
-  }(Polygon);
 
   return Mosaic;
 
