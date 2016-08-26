@@ -6,7 +6,6 @@ let pkg = require('./package.json');
 export default {
 	entry: 'tmp/Vandal.js',
 	plugins: [
-
 		babel(babelrc())
 	],
 	targets: [

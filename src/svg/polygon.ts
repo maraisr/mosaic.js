@@ -1,4 +1,4 @@
-import {Vector} from '../lib/Vector';
+import {Vector} from '../lib/vector';
 import Colour from '../lib/colour';
 
 import SVG from './index';

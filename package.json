@@ -9,7 +9,7 @@
     "clean": "rm -rf dist/* tmp/*",
     "prebuild": "npm run clean",
     "build": "tsc && rollup -c rollup.conf.js",
-    "postbuild": "uglifyjs dist/mosaic.js -c -m -o dist/mosaic.min.js"
+    "postbuild": "babili dist/mosaic.js > dist/mosaic.min.js && uglifyjs dist/mosaic.min.js -c -m -o dist/mosaic.min.js"
   },
   "homepage": "https://github.com/maraisr/mosaic.js#readme",
   "repository": {
@@ -27,9 +27,11 @@
     "shader"
   ],
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "babelrc-rollup": "^1.1.0",
-    "rollup": "^0.33.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babelrc-rollup": "^3.0.0",
+    "babili": "0.0.3",
+    "rollup": "^0.34.10",
     "rollup-plugin-babel": "^2.6.1",
     "uglifyjs": "^2.4.10"
   }
