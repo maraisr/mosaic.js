@@ -27,7 +27,7 @@
     "shader"
   ],
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babelrc-rollup": "^3.0.0",
     "babili": "0.0.12",

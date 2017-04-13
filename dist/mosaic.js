@@ -1,7 +1,7 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.mosaic = factory());
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.mosaic = factory());
 }(this, (function () { 'use strict';
 
 var classCallCheck = function (instance, Constructor) {
@@ -28,6 +28,14 @@ var createClass = function () {
   };
 }();
 
+
+
+
+
+
+
+
+
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -44,6 +52,16 @@ var inherits = function (subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
 
+
+
+
+
+
+
+
+
+
+
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -56,7 +74,7 @@ var Vector;
 (function (Vector) {
     var Three = function () {
         function Three() {
-            var xyz = arguments.length <= 0 || arguments[0] === undefined ? [0, 0, 0] : arguments[0];
+            var xyz = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0, 0, 0];
             classCallCheck(this, Three);
 
             this.xyz = xyz;
@@ -189,26 +207,26 @@ var Vector;
             }
         }, {
             key: 'x',
-            set: function set(v) {
+            set: function set$$1(v) {
                 this.xyz[0] = v;
             },
-            get: function get() {
+            get: function get$$1() {
                 return this.xyz[0];
             }
         }, {
             key: 'y',
-            set: function set(v) {
+            set: function set$$1(v) {
                 this.xyz[1] = v;
             },
-            get: function get() {
+            get: function get$$1() {
                 return this.xyz[1];
             }
         }, {
             key: 'z',
-            set: function set(v) {
+            set: function set$$1(v) {
                 this.xyz[2] = v;
             },
-            get: function get() {
+            get: function get$$1() {
                 return this.xyz[2];
             }
         }]);
@@ -537,17 +555,17 @@ var Triangle = function (_Polygon) {
         }
     }, {
         key: 'a',
-        get: function get() {
+        get: function get$$1() {
             return this.points[0];
         }
     }, {
         key: 'b',
-        get: function get() {
+        get: function get$$1() {
             return this.points[1];
         }
     }, {
         key: 'c',
-        get: function get() {
+        get: function get$$1() {
             return this.points[2];
         }
     }]);
